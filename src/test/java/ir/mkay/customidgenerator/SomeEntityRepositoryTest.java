@@ -1,7 +1,6 @@
 package ir.mkay.customidgenerator;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,18 +22,19 @@ public class SomeEntityRepositoryTest {
     @Test
     public void testEntityWithNullIdSaved() {
         var entity = new SomeEntity();
-        someEntityRepository.saveAndFlush(entity);
-        log.info("Entity saved with id: {}", entity.getId());
-        assertNotNull(entity.getId());
+        var savedEntity = someEntityRepository.saveAndFlush(entity);
+        log.info("Entity saved with id: {}", savedEntity.getId());
+        assertNotNull(savedEntity.getId());
     }
 
     @Test
     public void testEntityWithSpecifiedIdSaved() {
+        final var id = 2000;
         var entity = new SomeEntity();
-        entity.setId(2000);
-        someEntityRepository.saveAndFlush(entity);
-        log.info("Entity saved with id: {}", entity.getId());
-        assertEquals(2000, entity.getId());
+        entity.setId(id);
+        var savedEntity = someEntityRepository.saveAndFlush(entity);
+        log.info("Entity saved with id: {}", savedEntity.getId());
+        assertEquals(id, savedEntity.getId());
     }
 
     @Test
